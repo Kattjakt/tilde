@@ -1,12 +1,12 @@
-# tilde ~
+# ~
 
 An experimental Minecraft shader that adds a funky gradual roll-of to distant terrain, essentially preventing newly loaded chunks from instantly popping into existance and breaking the immersion.
 
 Currently only tested with [Iris](https://modrinth.com/mod/iris) on `1.24.4`, but surely works on other versions as well.
 
-### demo
+https://github.com/user-attachments/assets/4cbf303c-b6b2-4386-9876-025bb6622edd
 
-Here's a [youtube video](https://www.youtube.com/watch?v=4PobR0GUjWA) showcasing the shader. It was shot with 30 degrees FOV and a render distance of 16 chunks. The shader currently behaves quite differently based on the render distance and I personally would keep it between 12-16 chunks for the best effect. Will probably get fixed someday - who knows!
+[Here's a longer youtube video](https://www.youtube.com/watch?v=4PobR0GUjWA) showcasing the shader. Shot with 30 degrees FOV and a render distance of 16 chunks. The shader currently behaves quite differently based on the render distance and I personally would keep it between 12-16 chunks for the best effect. Will probably get fixed someday - who knows!
 
 ### installation
 
@@ -14,7 +14,6 @@ Here's a [youtube video](https://www.youtube.com/watch?v=4PobR0GUjWA) showcasing
 2. Inside the game, navigate to **Options 🡒 Video Settings 🡒 Shader Packs...** (or use the default shortcut `O`) and click the **Open Shader Pack Folder...** button.
 3. Download the latest shaderpack [here](https://github.com/Kattjakt/tilde/archive/refs/heads/main.zip) and drag the file to your newly opened shaderpack folder.
 4. Now it should appear in your shaderpack-list in-game, so select it and click apply!
-5. See the Tilde shader settings for different presets - there's two serious variations included , as well as a couple of weird ones :)
 
 ### details
 
