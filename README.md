@@ -2,7 +2,7 @@
 
 An experimental Minecraft shader that adds a funky gradual roll-of to distant terrain, essentially preventing newly loaded chunks from instantly popping into existance and breaking the immersion.
 
-Currently only tested with [Iris](https://modrinth.com/mod/iris) on `1.24.4`, but surely works on other versions as well.
+Currently only tested with [Iris](https://modrinth.com/mod/iris) on `1.21.4`, but surely works on other versions as well.
 
 https://github.com/user-attachments/assets/4cbf303c-b6b2-4386-9876-025bb6622edd
 
