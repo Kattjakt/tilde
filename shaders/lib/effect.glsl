@@ -4,9 +4,15 @@
 
 uniform float far;
 uniform vec3 cameraPosition;
+uniform vec3 previousCameraPosition;
+
 uniform mat4 gbufferModelViewInverse;
 uniform mat4 gbufferModelView;
 uniform float frameTimeCounter;
+
+float getPlayerSpeed() {
+    return clamp(length(cameraPosition.xz - previousCameraPosition.xz), 0.0, 0.01);
+}
 
 vec3 getViewPosition() {
     return (gl_ModelViewMatrix * gl_Vertex).xyz;

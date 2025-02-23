@@ -1,4 +1,4 @@
-#version 330 compatibility
+#version 120
 
 #ifdef GLSLANG
 #extension GL_GOOGLE_include_directive : enable
@@ -6,19 +6,25 @@
 
 #include "/lib/effect.glsl"
 
-out vec2 texCoord;
-out vec2 lightCoord;
-out vec4 vertexColor;
+varying vec4 color;
+varying vec3 normal;
+varying vec4 lmcoord;
+
+varying vec4 texcoord;
 
 out float vertexDistance;
 
 void main() {
+
     vec3 viewPos = effect();
 
     gl_Position = gl_ProjectionMatrix * vec4(viewPos.xyz, 1.0);
 
-    texCoord = gl_MultiTexCoord0.xy;
-    lightCoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
-    vertexColor = gl_Color;
-    vertexDistance = length((viewPos).xyz);
+    texcoord = gl_MultiTexCoord0;
+    normal = gl_NormalMatrix * gl_Normal;
+    color = gl_Color;
+
+		lmcoord = gl_TextureMatrix[1] * gl_MultiTexCoord1;
+
+		vertexDistance = length(viewPos.xyz);
 }

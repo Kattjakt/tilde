@@ -21,7 +21,7 @@ float getFogStrength(int shape, float fogStart, float fogEnd) {
 	vec4 fragPos = vec4((gl_FragCoord.xy / vec2(viewWidth, viewHeight)) * 2.0f - 1.0f, gl_FragCoord.z * 2.0f - 1.0f, 1.0f);
 	fragPos = gbufferProjectionInverse * fragPos;
 	fragPos /= fragPos.w;
-
+	
 	float dist;
 	if(shape == 1 /* CYLINDER */) {
 		vec4 worldPos = gbufferModelViewInverse * fragPos;
@@ -29,22 +29,18 @@ float getFogStrength(int shape, float fogStart, float fogEnd) {
 	}else {
 		dist = length(fragPos.xyz);
 	}
-
+	
 	return smoothstep(fogStart, fogEnd, dist);
 }
 
 #endif
 
 void main() {
-	vec4 col = color;
-
+	vec4 albedo = texture2D(texture, texcoord) * color;
+	
 	#ifdef FOG
-	float width = gl_Fog.end - gl_Fog.start;
-	float newWidth = width * 4.0f;
-
-	col.a *= 1.0f - getFogStrength(0, gl_Fog.start, gl_Fog.start + newWidth);
-	col.rgb = mix(col.rgb, gl_Fog.color.rgb, 0.3f);
+	albedo.rgb = mix(albedo.rgb, gl_Fog.color.rgb, getFogStrength(fogShape, gl_Fog.start, gl_Fog.end));
 	#endif
-
-	gl_FragData[0] = texture2D(texture, texcoord) * col;
+	
+	gl_FragData[0] = albedo;
 }

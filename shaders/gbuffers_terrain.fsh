@@ -1,40 +1,35 @@
 #version 330 compatibility
 
-#ifdef GLSLANG
-#extension GL_GOOGLE_include_directive : enable
-#endif
-
-#include "/lib/fog.glsl"
-
-in vec2 texCoord;
-in vec2 lightCoord;
-in vec4 vertexColor;
-
-uniform sampler2D gtexture;
-uniform sampler2D lightmap;
+varying vec4 texcoord;
+varying vec3 normal;
+varying vec4 color;
+varying vec4 lmcoord;
 
 uniform float fogStart;
 uniform float fogEnd;
 uniform vec3 fogColor;
 uniform float far;
-
-layout(location = 0) out vec4 pixelColor;
+uniform sampler2D texture;
+uniform sampler2D lightmap;
 
 in float vertexDistance;
 
+float applyFog(float vertexDistance, float fogStart, float fogEnd) {
+	// start the fog a bit earlier to hide largely distorted vertices
+  return vertexDistance < fogEnd
+    ? smoothstep(fogStart * 0.9, fogEnd, vertexDistance)
+    : 1.0;
+}
+
 void main() {
-    vec4 texColor = texture(gtexture, texCoord);
+	if (vertexDistance > far) { // eh?
+		discard;
+	}
 
-    if (texColor.a < 0.1) discard;
+	gl_FragData[0] = texture2D(texture, texcoord.st) * (texture2D(lightmap, lmcoord.st)) * color;
+	float fogValue = applyFog(vertexDistance, fogStart, fogEnd);
+	gl_FragData[0].rgb = mix(gl_FragData[0].rgb, fogColor, fogValue);
 
-    if (vertexDistance > far) { // eh?
-        discard;
-    }
-
-    vec4 lightColor = texture(lightmap, lightCoord);
-
-    float fogValue = applyFog(vertexDistance, fogStart, fogEnd);
-    vec4 finalColor = texColor * lightColor * vertexColor;
-
-    pixelColor = vec4(mix(finalColor.xyz, fogColor, fogValue), finalColor.a);
+	gl_FragData[1] = vec4(vec3(gl_FragCoord.z), 1.0);
+	gl_FragData[4] = vec4(0.0, 0.0, 1.0, 1.0);
 }
